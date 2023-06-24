@@ -52,6 +52,9 @@ void letterMoving();
 //bulletMoving
 void bulletMoving();
 
+//Score
+int calcResult();
+
 int main(void)
 {
 	int k = 0;
@@ -62,17 +65,23 @@ int main(void)
 		letterMoving();
 		if (_kbhit())
 		{
-			char ch = getchar();
+			char ch = _getch();
 			ch = toupper(ch);
 			for(k = 0; k < KLETTER_COUNT; k++)
 			{ 
 				if (letters[k].isDisplay == 1 && letters[k].ch == ch)
 				{
 					initBullet(letters[k].x);
-					bullet.life = 1;
 					while (bullet.y > 0)
 					{
 						bulletMoving();
+						if (bullet.y == letters[k].y)
+						{
+							letters[k].life = 0;
+							bullet.life = 0;
+							drawLetter(' ', bullet.x, bullet.y);
+							printf("\a");
+						}
 						Sleep(KBULLET_SPEED);
 					}					
 				}
@@ -80,6 +89,11 @@ int main(void)
 		}
 		Sleep(KSPEED);
 	}
+
+	//Game finished
+	gotoxy(30, 12);
+	printf("User got %d, total %d\n", calcResult(), KLETTER_COUNT);
+
 	return 0;
 }
 
@@ -105,6 +119,7 @@ void initBullet(int x)
 	bullet.ch = '^';
 	bullet.x = x;
 	bullet.y = 25;
+	bullet.life = 1;
 }
 
 void gotoxy(int x, int y)
@@ -182,4 +197,18 @@ void bulletMoving()
 		drawLetter(bullet.ch, bullet.x, bullet.y - 1);
 	}
 	bullet.y--;
+}
+
+int calcResult()
+{
+	int counter = 0;
+	int i = 0;
+	for (i = 0; i < KLETTER_COUNT; i++)
+	{
+		if (letters[i].life == 0)
+		{
+			counter++;
+		}
+	}
+	return counter;
 }
