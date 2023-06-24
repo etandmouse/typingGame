@@ -37,6 +37,13 @@ void initBullet(int x);
 // positioning to Command Prompt
 void gotoxy(int x, int y);
 
+
+// Draw Letter
+void drawLetter(char ch, int x, int y);
+
+//Check letter is displayed or not
+void judgeLetterDisplay();
+
 void bulletMoving();
 
 int main(void)
@@ -79,6 +86,35 @@ void gotoxy(int x, int y)
 	handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	SetConsoleCursorPosition(handle, coord);
+}
+
+void drawLetter(char ch, int x, int y)
+{
+	gotoxy(x, y);
+	printf("%c", ch);
+}
+
+void judgeLetterDisplay()
+{
+	int i = 0;
+	for (i < KLETTER_COUNT; i++)
+	{
+		if (letters[i].life == 0)
+		{
+			letters[i].isDisplay = 0;
+		}
+		else
+		{
+			if (letters[i].y < 0 || letters[i].y > 24)
+			{
+				letters[i].isDisplay = 0;
+			}
+			else
+			{
+				letters[i].isDisplay = 1;
+			}
+		}
+	}
 }
 
 void bulletMoving()
