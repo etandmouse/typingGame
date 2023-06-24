@@ -10,7 +10,7 @@ Description : It's a typing game to practice typing English
 #include <Windows.h>
 
 #define KLETTER_COUNT 10
-#define KSPEED 10
+#define KSPEED 1000
 
 /*-------------------Initial--------------------*/
 //Design letter and bullet
@@ -52,7 +52,13 @@ void bulletMoving(int x);
 
 int main(void)
 {
+	initLetters();
 
+	while (letters[KLETTER_COUNT - 1].y < 25)
+	{
+		letterMoving();
+		Sleep(KSPEED);
+	}
 	return 0;
 }
 
