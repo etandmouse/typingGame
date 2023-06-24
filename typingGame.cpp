@@ -58,8 +58,12 @@ int calcResult();
 int main(void)
 {
 	int k = 0;
+	system("cls");
+	gotoxy(30, 12);
+	printf("Game start!!\n");
+	system("pause");
+	system("cls");
 	initLetters();
-
 	while (letters[KLETTER_COUNT - 1].y < 25)
 	{
 		letterMoving();
@@ -94,6 +98,7 @@ int main(void)
 	gotoxy(30, 12);
 	printf("User got %d, total %d\n", calcResult(), KLETTER_COUNT);
 
+	getchar();
 	return 0;
 }
 
