@@ -8,9 +8,11 @@ Description : It's a typing game to practice typing English
 #include <stdlib.h>
 #include <time.h>
 #include <Windows.h>
+#include <conio.h>
 
 #define KLETTER_COUNT 10
 #define KSPEED 1000
+#define KBULLET_SPEED 50
 
 /*-------------------Initial--------------------*/
 //Design letter and bullet
@@ -48,15 +50,34 @@ void judgeLetterDisplay();
 void letterMoving();
 
 //bulletMoving
-void bulletMoving(int x);
+void bulletMoving();
 
 int main(void)
 {
+	int k = 0;
 	initLetters();
 
 	while (letters[KLETTER_COUNT - 1].y < 25)
 	{
 		letterMoving();
+		if (_kbhit())
+		{
+			char ch = getchar();
+			ch = toupper(ch);
+			for(k = 0; k < KLETTER_COUNT; k++)
+			{ 
+				if (letters[k].isDisplay == 1 && letters[k].ch == ch)
+				{
+					initBullet(letters[k].x);
+					bullet.life = 1;
+					while (bullet.y > 0)
+					{
+						bulletMoving();
+						Sleep(KBULLET_SPEED);
+					}					
+				}
+			}
+		}
 		Sleep(KSPEED);
 	}
 	return 0;
@@ -153,7 +174,7 @@ void letterMoving()
 	}
 }
 
-void bulletMoving(int x)
+void bulletMoving()
 {
 	if (bullet.life == 1)
 	{
