@@ -44,6 +44,9 @@ void drawLetter(char ch, int x, int y);
 //Check letter is displayed or not
 void judgeLetterDisplay();
 
+//letterMoving: drop down all letters
+void letterMoving();
+
 void bulletMoving();
 
 int main(void)
@@ -97,7 +100,7 @@ void drawLetter(char ch, int x, int y)
 void judgeLetterDisplay()
 {
 	int i = 0;
-	for (i < KLETTER_COUNT; i++)
+	for (i = 0; i < KLETTER_COUNT; i++)
 	{
 		if (letters[i].life == 0)
 		{
@@ -113,6 +116,31 @@ void judgeLetterDisplay()
 			{
 				letters[i].isDisplay = 1;
 			}
+		}
+	}
+}
+
+void letterMoving()
+{
+	int i = 0;
+	for (i = 0; i < KLETTER_COUNT; i++)
+	{
+		if (letters[i].y < 25)
+		{
+			if (letters[i].life == 1)
+			{
+				drawLetter(' ', letters[i].x, letters[i].y);
+				drawLetter(letters[i].ch, letters[i].x, letters[i].y + 1);
+			}
+			else
+			{
+				drawLetter(' ', letters[i].x, letters[i].y);
+			}
+			letters[i].y++;
+		}
+		else
+		{
+			drawLetter(' ', letters[i].x, letters[i].y);
 		}
 	}
 }
