@@ -47,7 +47,8 @@ void judgeLetterDisplay();
 //letterMoving: drop down all letters
 void letterMoving();
 
-void bulletMoving();
+//bulletMoving
+void bulletMoving(int x);
 
 int main(void)
 {
@@ -123,11 +124,12 @@ void judgeLetterDisplay()
 void letterMoving()
 {
 	int i = 0;
+	judgeLetterDisplay();
 	for (i = 0; i < KLETTER_COUNT; i++)
 	{
 		if (letters[i].y < 25)
 		{
-			if (letters[i].life == 1)
+			if (letters[i].isDisplay == 1)
 			{
 				drawLetter(' ', letters[i].x, letters[i].y);
 				drawLetter(letters[i].ch, letters[i].x, letters[i].y + 1);
@@ -145,20 +147,12 @@ void letterMoving()
 	}
 }
 
-void bulletMoving()
+void bulletMoving(int x)
 {
-	COORD bullet;
-	bullet.X = 10;
-	bullet.Y = 24;
-
-	//move bullet
-	while (bullet.Y > 0)
+	if (bullet.life == 1)
 	{
-		gotoxy(bullet.X, bullet.Y);
-		printf(" ");
-		gotoxy(bullet.X, bullet.Y - 1);
-		printf("%c", '^');
-		Sleep(1000);
-		bullet.Y--;
+		drawLetter(' ', bullet.x, bullet.y);
+		drawLetter(bullet.ch, bullet.x, bullet.y - 1);
 	}
+	bullet.y--;
 }
